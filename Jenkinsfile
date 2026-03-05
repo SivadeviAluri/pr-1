@@ -10,8 +10,8 @@ pipeline {
         stage('Terraform init & Apply') {
             steps {
                 sh ''' 
-                teraform init
-                teraform apply -auto-approve -var project_id=${PROJECT_ID}
+                terraform init
+                terraform apply -auto-approve -var project_id=${PROJECT_ID}
                 '''
             }
         }
