@@ -1,6 +1,6 @@
 provider "google" {
-    project = "var.project_id"
-    region = "var.region"
+    project = var.project_id
+    region = var.region
 }
 
 resource "google_compute_network" "vpc" {
@@ -20,7 +20,7 @@ resource "google_compute_firewall" "firewall" {
 resource "google_compute_instance" "nginx_vm" {
     name = "nginx-vm"
     machine_type = "e2-micro"
-    zone = "var.zone"
+    zone = var.zone
 
     boot_disk {
         initialize_params {
