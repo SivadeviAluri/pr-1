@@ -2,18 +2,24 @@ pipeline {
     agent any
 
     environment {
-        CREDENTIALS = credentials('hello-480')
         PROJECT_ID = "devops-489105"
     }
+
     stages {
 
-        stage('Terraform init & Apply') {
+        stage('Terraform Apply') {
             steps {
-                sh ''' 
-                terraform init
-                terraform apply -auto-approve -var project_id=${PROJECT_ID}
-                '''
+
+                withCredentials([file(credentialsId: 'gcp-sa-json', variable: 'GOOGLE_CREDENTIALS')]) {
+
+                    sh '''
+                    export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_CREDENTIALS
+                    terraform init
+                    terraform apply -auto-approve -var project_id=${PROJECT_ID}
+                    '''
+
+                }
             }
         }
     }
-} 
+}
